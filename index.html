@@ -555,8 +555,35 @@
       mostrarRegistros();
     });
     document.getElementById("whatsapp").addEventListener("click", function() {
-      const url = "https://wa.me/?text=" + encodeURIComponent(ultimoRelato);
-      window.open(url, "_blank");
+  const texto = descricao.value.toLowerCase();
+  const classificacao = classificar(descricao.value);
+  let numero = "";
+  if (
+    classificacao.nome === "Abastecimento de água" ||
+    classificacao.nome === "Saneamento e drenagem"
+  ) {
+    numero = "5588982324926";
+  }
+  if (numero === "") {
+    alert(
+      "Este problema não foi identificado como um atendimento do SAAE. " +
+      "Não vamos encaminhar para um número errado. " +
+      "O setor sugerido é: " + classificacao.nome
+    );
+    return;
+  }
+  const mensagem =
+    "Olá, SAAE de Sobral! Gostaria de informar um problema.\\n\\n" +
+    "Protocolo demonstrativo: " + ultimoProtocolo + "\\n" +
+    "Descrição: " + descricao.value + "\\n" +
+    "Bairro: " + bairro.value + "\\n" +
+    "Ponto de referência: " + referencia.value + "\\n\\n" +
+    "Este relato foi preparado pelo projeto Sobral Resolve.";
+  const url =
+    "https://wa.me/" + numero +
+    "?text=" + encodeURIComponent(mensagem);
+  window.open(url, "_blank");
+
     });
     document.getElementById("copiar").addEventListener("click", async function() {
       try {
