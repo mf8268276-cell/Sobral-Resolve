@@ -1,0 +1,692 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#087443">
+  <title>Sobral Resolve</title>
+
+  <style>
+    :root {
+      --verde: #087443;
+      --teal: #168C83;
+      --azul: #2C80C3;
+      --fundo: #f3f8f6;
+      --texto: #18332b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--fundo);
+      color: var(--texto);
+      line-height: 1.6;
+    }
+
+    button, input, textarea {
+      font: inherit;
+    }
+
+    button:focus-visible, input:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid #f4b942;
+      outline-offset: 3px;
+    }
+
+    header {
+      color: white;
+      padding: 25px 18px 35px;
+      background: linear-gradient(
+        120deg, var(--verde), var(--teal), var(--azul)
+      );
+    }
+
+    .topo, main, .nav-interno, footer {
+      max-width: 1050px;
+      margin: auto;
+    }
+
+    .marca {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 30px;
+      background: #ffffff25;
+      border-radius: 14px;
+      padding: 8px 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.6rem, 5vw, 2.3rem);
+    }
+
+    .marca p {
+      margin: 0;
+    }
+
+    .apresentacao {
+      margin-top: 28px;
+    }
+
+    .apresentacao h2 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 8px;
+    }
+
+    .aviso {
+      padding: 12px 18px;
+      background: #fff3cd;
+      color: #59420a;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    main {
+      padding: 25px 18px 40px;
+    }
+
+    .navegacao {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 25px;
+    }
+
+    .botao-menu {
+      min-height: 70px;
+      padding: 15px;
+      color: white;
+      background: linear-gradient(120deg, var(--verde), var(--teal));
+      border: 0;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .botao-menu:nth-child(2) {
+      background: linear-gradient(120deg, var(--teal), var(--azul));
+    }
+
+    .botao-menu:nth-child(3) {
+      background: linear-gradient(120deg, var(--verde), var(--azul));
+    }
+
+    .botao-menu:hover {
+      filter: brightness(0.88);
+      transform: translateY(-2px);
+    }
+
+    .botao-menu:active {
+      transform: scale(0.98);
+    }
+
+    .tela {
+      display: none;
+    }
+
+    .tela.ativa {
+      display: block;
+    }
+
+    .cartao {
+      background: white;
+      padding: 24px;
+      border-radius: 14px;
+      border: 1px solid #d8e5e1;
+      box-shadow: 0 4px 16px #173d3210;
+      margin-bottom: 18px;
+    }
+
+    .cartao h2 {
+      color: var(--verde);
+      margin-top: 0;
+    }
+
+    .campo {
+      margin: 18px 0;
+    }
+
+    .campo label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .campo input,
+    .campo textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #91aaa2;
+      border-radius: 9px;
+      background: white;
+    }
+
+    .campo textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .botao {
+      background: var(--verde);
+      color: white;
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 18px;
+      min-height: 46px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .botao:hover {
+      background: var(--teal);
+    }
+
+    .botao-secundario {
+      background: #e4f3eb;
+      color: var(--verde);
+    }
+
+    .mensagem {
+      margin-top: 15px;
+      padding: 12px;
+      background: #e4f3eb;
+      border-radius: 9px;
+      overflow-wrap: anywhere;
+    }
+
+    .grade {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .registro {
+      background: white;
+      padding: 16px;
+      border: 1px solid #d8e5e1;
+      border-radius: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .registro h3 {
+      color: var(--verde);
+      margin-top: 0;
+    }
+
+    .texto-suave {
+      color: #425d56;
+    }
+
+    footer {
+      padding: 25px 18px;
+      background: #123d32;
+      color: white;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .acessibilidade {
+      margin-top: 15px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .acessibilidade button {
+      border: 0;
+      background: white;
+      color: var(--verde);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 650px) {
+      .navegacao, .grade {
+        grid-template-columns: 1fr;
+      }
+
+      .botao-menu {
+        text-align: left;
+      }
+
+      main {
+        padding: 18px 12px 30px;
+      }
+
+      .cartao {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="topo">
+      <div class="marca">
+        <div class="logo" aria-hidden="true">🏙️</div>
+        <div>
+          <h1>Sobral Resolve</h1>
+          <p>Sua cidade, sua voz.</p>
+        </div>
+      </div>
+
+      <div class="apresentacao">
+        <h2>Como podemos ajudar?</h2>
+        <p>
+          Um espaço demonstrativo para registrar problemas urbanos,
+          consultar registros e visualizar o mural da cidade.
+        </p>
+      </div>
+
+      <div class="acessibilidade">
+        <button type="button" onclick="alterarFonte(-2)">A− Texto</button>
+        <button type="button" onclick="alterarFonte(2)">A+ Texto</button>
+        <button type="button" onclick="restaurarFonte()">Restaurar</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="aviso">
+    Protótipo demonstrativo, independente e não oficial.
+    Os registros não são enviados à Prefeitura de Sobral.
+  </div>
+
+  <main>
+    <nav class="navegacao" aria-label="Menu principal">
+      <button class="botao-menu" onclick="mostrarTela('registrar')">
+        📝 Registrar ocorrência
+      </button>
+
+      <button class="botao-menu" onclick="mostrarTela('consultar')">
+        🔎 Consultar ocorrência
+      </button>
+
+      <button class="botao-menu" onclick="mostrarTela('mural')">
+        🏙️ Ver mural da cidade
+      </button>
+    </nav>
+
+    <section id="inicio" class="tela ativa">
+      <div class="cartao">
+        <h2>Bem-vindo ao Sobral Resolve!</h2>
+        <p>
+          Escolha uma das opções acima para conhecer o projeto.
+          A proposta é organizar informações sobre problemas urbanos
+          de maneira simples, clara e acessível.
+        </p>
+      </div>
+
+      <div class="grade">
+        <div class="registro">
+          <h3>📝 Registre</h3>
+          <p>Descreva o problema, informe o bairro e adicione uma foto.</p>
+          <button class="botao" onclick="mostrarTela('registrar')">
+            Começar
+          </button>
+        </div>
+
+        <div class="registro">
+          <h3>🔎 Consulte</h3>
+          <p>Pesquise um código de demonstração criado neste navegador.</p>
+          <button class="botao" onclick="mostrarTela('consultar')">
+            Consultar
+          </button>
+        </div>
+
+        <div class="registro">
+          <h3>🏙️ Mural</h3>
+          <p>Visualize os registros de demonstração feitos neste aparelho.</p>
+          <button class="botao" onclick="mostrarTela('mural')">
+            Ver mural
+          </button>
+        </div>
+
+        <div class="registro">
+          <h3>♿ Acessibilidade</h3>
+          <p>Use os controles acima para ajustar o tamanho das letras.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="registrar" class="tela">
+      <div class="cartao">
+        <h2>Registrar ocorrência</h2>
+        <p class="texto-suave">
+          Os dados abaixo são salvos apenas neste navegador.
+        </p>
+
+        <form id="formulario">
+          <div class="campo">
+            <label for="descricao">Descrição do problema *</label>
+            <textarea id="descricao" required minlength="5" maxlength="1500"
+              placeholder="Ex.: há um buraco na rua próximo à praça."></textarea>
+          </div>
+
+          <div class="mensagem">
+            <strong>Setor sugerido:</strong>
+            <span id="setor">Descreva o problema para receber uma sugestão.</span>
+            <p id="explicacao" class="texto-suave">
+              A sugestão usa palavras digitadas e pode não identificar o setor correto.
+            </p>
+          </div>
+
+          <div class="campo">
+            <label for="bairro">Bairro *</label>
+            <input id="bairro" required maxlength="100"
+              placeholder="Digite o bairro">
+          </div>
+
+          <div class="campo">
+            <label for="referencia">Ponto de referência (opcional)</label>
+            <input id="referencia" maxlength="200"
+              placeholder="Ex.: próximo a uma escola">
+          </div>
+
+          <div class="campo">
+            <label for="foto">Foto (opcional)</label>
+            <input id="foto" type="file" accept="image/*">
+            <img id="previa" class="foto-previa" alt="Prévia da foto" hidden>
+          </div>
+
+          <button class="botao" type="submit">Salvar demonstração</button>
+          <button class="botao botao-secundario" type="button"
+            onclick="mostrarTela('inicio')">Voltar</button>
+        </form>
+
+        <div id="mensagemRegistro" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="consultar" class="tela">
+      <div class="cartao">
+        <h2>Consultar ocorrência</h2>
+        <p>Digite o código recebido ao salvar uma demonstração.</p>
+
+        <form id="formConsulta">
+          <div class="campo">
+            <label for="codigo">Código do registro</label>
+            <input id="codigo" required placeholder="Ex.: DEMO-123456">
+          </div>
+          <button class="botao" type="submit">Consultar</button>
+        </form>
+
+        <div id="resultadoConsulta" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="mural" class="tela">
+      <div class="cartao">
+        <h2>Mural da cidade</h2>
+        <p>
+          Registros demonstrativos criados neste navegador.
+          Eles não são reclamações públicas nem dados oficiais.
+        </p>
+        <button class="botao" onclick="atualizarMural()">Atualizar mural</button>
+        <button class="botao botao-secundario"
+          onclick="mostrarTela('registrar')">Novo registro</button>
+      </div>
+
+      <div id="lista" class="grade"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Sobral Resolve</strong> | Sua cidade, sua voz.</p>
+    <p>
+      Protótipo independente, sem integração com os sistemas da Prefeitura.
+    </p>
+  </footer>
+
+  <script>
+    const CHAVE = "sobralResolveRegistros";
+    let fonte = 16;
+    let fotoDados = "";
+
+    function mostrarTela(nome) {
+      document.querySelectorAll(".tela").forEach(function(tela) {
+        tela.classList.toggle("ativa", tela.id === nome);
+      });
+
+      if (nome === "mural") atualizarMural();
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function alterarFonte(valor) {
+      fonte = Math.max(12, Math.min(26, fonte + valor));
+      document.documentElement.style.setProperty("--fonte", fonte + "px");
+    }
+
+    function restaurarFonte() {
+      fonte = 16;
+      document.documentElement.style.setProperty("--fonte", "16px");
+    }
+
+    function lerRegistros() {
+      try {
+        return JSON.parse(localStorage.getItem(CHAVE) || "[]");
+      } catch (erro) {
+        return [];
+      }
+    }
+
+    function guardarRegistros(registros) {
+      try {
+        localStorage.setItem(CHAVE, JSON.stringify(registros));
+        return true;
+      } catch (erro) {
+        return false;
+      }
+    }
+
+    function classificar(texto) {
+      const t = texto.normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const regras = [
+        [["lampada", "poste apagado", "iluminacao", "poste sem luz"],
+          "Iluminação pública"],
+        [["buraco", "asfalto", "calcada", "pavimentacao"],
+          "Infraestrutura e vias públicas"],
+        [["lixo", "entulho", "coleta de lixo", "limpeza urbana"],
+          "Limpeza urbana"],
+        [["esgoto", "bueiro"], "Saneamento"],
+        [["vazamento de agua", "falta de agua", "sem agua"],
+          "Abastecimento de água"],
+        [["arvore caída", "arvore caida", "galho caido", "poda de arvore"],
+          "Arborização e áreas verdes"],
+        [["semaforo", "placa de transito", "sinalizacao"],
+          "Sinalização e trânsito"],
+        [["escola", "merenda escolar"], "Educação"],
+        [["posto de saude", "unidade de saude"], "Saúde"]
+      ];
+
+      for (const regra of regras) {
+        if (regra[0].some(function(palavra) {
+          return t.includes(palavra);
+        })) {
+          return regra[1];
+        }
+      }
+
+      return "Setor a confirmar";
+    }
+
+    document.getElementById("descricao").addEventListener("input", function() {
+      const setor = classificar(this.value);
+      document.getElementById("setor").textContent = setor;
+      document.getElementById("explicacao").textContent =
+        "Sugestão automática pelo texto. O setor responsável precisa ser confirmado.";
+    });
+
+    document.getElementById("foto").addEventListener("change", function() {
+      const arquivo = this.files[0];
+      const previa = document.getElementById("previa");
+      fotoDados = "";
+
+      if (!arquivo) {
+        previa.hidden = true;
+        return;
+      }
+
+      if (!arquivo.type.startsWith("image/") || arquivo.size > 1024 * 1024) {
+        alert("Escolha uma imagem de até 1 MB para esta demonstração.");
+        this.value = "";
+        previa.hidden = true;
+        return;
+      }
+
+      const leitor = new FileReader();
+
+      leitor.onload = function(evento) {
+        fotoDados = evento.target.result;
+        previa.src = fotoDados;
+        previa.hidden = false;
+      };
+
+      leitor.readAsDataURL(arquivo);
+    });
+
+    document.getElementById("formulario").addEventListener("submit", function(evento) {
+      evento.preventDefault();
+
+      const descricao = document.getElementById("descricao").value.trim();
+      const bairro = document.getElementById("bairro").value.trim();
+      const referencia = document.getElementById("referencia").value.trim();
+
+      if (!descricao || !bairro) return;
+
+      const registro = {
+        codigo: "DEMO-" + Date.now().toString().slice(-8),
+        descricao: descricao,
+        bairro: bairro,
+        referencia: referencia,
+        setor: classificar(descricao),
+        data: new Date().toLocaleString("pt-BR"),
+        foto: fotoDados
+      };
+
+      const registros = lerRegistros();
+      registros.unshift(registro);
+
+      if (!guardarRegistros(registros)) {
+        document.getElementById("mensagemRegistro").textContent =
+          "Não foi possível salvar neste navegador. Nenhum envio à Prefeitura foi realizado.";
+        return;
+      }
+
+      document.getElementById("mensagemRegistro").textContent =
+        "Demonstração salva! Código: " + registro.codigo +
+        ". Guarde o código para testar a consulta. Não é protocolo oficial.";
+
+      this.reset();
+      fotoDados = "";
+      document.getElementById("previa").hidden = true;
+      document.getElementById("setor").textContent =
+        "Descreva o problema para receber uma sugestão.";
+    });
+
+    document.getElementById("formConsulta").addEventListener("submit", function(evento) {
+      evento.preventDefault();
+
+      const codigo = document.getElementById("codigo").value.trim().toUpperCase();
+      const registro = lerRegistros().find(function(item) {
+        return item.codigo === codigo;
+      });
+
+      const resultado = document.getElementById("resultadoConsulta");
+      resultado.replaceChildren();
+
+      if (!registro) {
+        resultado.textContent =
+          "Código não encontrado neste navegador. Confira o código e tente novamente.";
+        resultado.className = "mensagem";
+        return;
+      }
+
+      resultado.className = "mensagem";
+
+      const titulo = document.createElement("h3");
+      titulo.textContent = "Registro demonstrativo encontrado";
+
+      const detalhes = document.createElement("p");
+      detalhes.textContent =
+        "Código: " + registro.codigo +
+        " | Bairro: " + registro.bairro +
+        " | Setor sugerido: " + registro.setor +
+        " | Data: " + registro.data +
+        " | Descrição: " + registro.descricao;
+
+      resultado.append(titulo, detalhes);
+
+      const aviso = document.createElement("p");
+      aviso.textContent = "Este registro é local e não é um protocolo oficial.";
+      resultado.appendChild(aviso);
+    });
+
+    function atualizarMural() {
+      const lista = document.getElementById("lista");
+      lista.replaceChildren();
+
+      const registros = lerRegistros();
+
+      if (!registros.length) {
+        const aviso = document.createElement("div");
+        aviso.className = "registro";
+        aviso.textContent =
+          "Ainda não há registros de demonstração neste navegador. Você pode criar um na opção Registrar ocorrência.";
+        lista.appendChild(aviso);
+        return;
+      }
+
+      registros.forEach(function(registro) {
+        const cartao = document.createElement("article");
+        cartao.className = "registro";
+
+        const etiqueta = document.createElement("span");
+        etiqueta.className = "etiqueta";
+        etiqueta.textContent = registro.setor;
+
+        const titulo = document.createElement("h3");
+        titulo.textContent = registro.bairro;
+
+        const descricao = document.createElement("p");
+        descricao.textContent = registro.descricao;
+
+        const data = document.createElement("small");
+        data.textContent = "Código " + registro.codigo + " | " + registro.data;
+
+        cartao.append(etiqueta, titulo, descricao, data);
+
+        if (registro.referencia) {
+          const ref = document.createElement("p");
+          ref.textContent = "Referência: " + registro.referencia;
+          cartao.appendChild(ref);
+        }
+
+        if (registro.foto) {
+          const imagem = document.createElement("img");
+          imagem.src = registro.foto;
+          imagem.alt = "Foto anexada ao registro demonstrativo";
+          imagem.className = "foto-previa";
+          cartao.appendChild(imagem);
+        }
+
+        lista.appendChild(cartao);
+      });
+    }
+  </script>
+</body>
+</html>
