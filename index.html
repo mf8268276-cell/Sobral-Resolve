@@ -1,0 +1,1525 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087e70">
+<meta name="description" content="Sobral Resolve - projeto demonstrativo de cidadania digital.">
+<title>Sobral Resolve | Cidadania Digital</title>
+
+<style>
+:root {
+  --azul: #06466b;
+  --azul-claro: #087a98;
+  --verde: #07965b;
+  --verde-escuro: #087e70;
+  --verde-claro: #e7f6f1;
+  --fundo: #f2f8f7;
+  --texto: #17415a;
+  --borda: #dbe7e9;
+  --branco: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+/* CABEÇALHO */
+
+.cabecalho {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  padding: 32px 20px;
+  color: white;
+  background: linear-gradient(
+    115deg,
+    #079b7c 0%,
+    #07577b 55%,
+    #06466b 100%
+  );
+}
+
+.cabecalho::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: -160px;
+  top: -190px;
+  border: 22px solid #ffffff15;
+  border-radius: 50%;
+}
+
+.cabecalho-conteudo {
+  position: relative;
+  max-width: 1120px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.logo {
+  width: 84px;
+  height: 84px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 4px solid #7de0b1;
+  background: #36c18b;
+  font-size: 39px;
+}
+
+.etiqueta {
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 30px;
+  background: #ffffff20;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: .5px;
+}
+
+h1 {
+  margin: 12px 0;
+  font-size: clamp(35px, 5vw, 60px);
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.destaque {
+  color: #63d6a1;
+}
+
+.slogan {
+  margin: 0;
+  font-size: 18px;
+}
+
+.subtitulo {
+  margin: 6px 0 0;
+  font-size: 14px;
+}
+
+/* BRASÃO ILUSTRATIVO NO FUNDO */
+
+.brasao-fundo {
+  position: fixed;
+  top: 49%;
+  right: 3%;
+  transform: translateY(-35%);
+  width: min(36vw, 390px);
+  color: #07876f;
+  opacity: .13;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.brasao-fundo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* MENU */
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  box-shadow: 0 2px 12px #1232;
+}
+
+.menu {
+  max-width: 1120px;
+  margin: auto;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.menu a {
+  display: inline-block;
+  padding: 10px 13px;
+  border-radius: 9px;
+  color: var(--azul);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.menu a:hover,
+.menu a:focus {
+  color: white;
+  background: var(--verde-escuro);
+}
+
+/* CONTEÚDO */
+
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 28px auto;
+  padding: 0 16px;
+}
+
+.colunas {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(260px, .85fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.cartao {
+  margin-bottom: 16px;
+  padding: 22px;
+  border: 1px solid #e2ebed;
+  border-radius: 16px;
+  background: #ffffffed;
+  box-shadow: 0 5px 22px #0a40500d;
+}
+
+.cabecalho-cartao {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.icone {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(135deg, #0aa85e, #087b70);
+  font-size: 23px;
+}
+
+h2 {
+  margin: 0 0 6px;
+  color: var(--azul);
+  font-size: 23px;
+  line-height: 1.25;
+}
+
+h3 {
+  margin: 0 0 8px;
+  color: var(--azul);
+  font-size: 17px;
+}
+
+.texto-secundario {
+  margin: 0;
+  color: #607b8a;
+  font-size: 14px;
+}
+
+.aviso {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 11px;
+  background: var(--verde-claro);
+  color: #176b5b;
+  font-size: 13px;
+}
+
+.ajuda {
+  margin: 5px 0 0;
+  color: #607b8a;
+  font-size: 12px;
+}
+
+/* FORMULÁRIO */
+
+label {
+  display: block;
+  margin: 15px 0 7px;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #cbd9df;
+  border-radius: 9px;
+  background: white;
+  color: var(--texto);
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #36b995;
+  outline-offset: 2px;
+}
+
+input[type="file"] {
+  padding: 9px;
+  font-size: 12px;
+}
+
+.duas-colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(100deg, var(--verde), var(--verde-escuro));
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+.botao:hover {
+  filter: brightness(.94);
+}
+
+.botao-largo {
+  width: 100%;
+  margin-top: 17px;
+}
+
+.botao-claro {
+  background: #e5f3ef;
+  color: #126e5c;
+}
+
+.botao-whatsapp {
+  background: #128c52;
+}
+
+.botao:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* COLUNA LATERAL E CONTATOS */
+
+.cabecalho-lateral {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cabecalho-lateral .icone {
+  width: 42px;
+  height: 42px;
+  font-size: 20px;
+}
+
+.contato {
+  margin: 10px 0;
+  padding: 13px;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+.contato strong {
+  display: block;
+  color: var(--azul);
+}
+
+.contato p {
+  margin: 5px 0 10px;
+  color: #607b8a;
+  font-size: 13px;
+}
+
+.contato a {
+  color: var(--verde-escuro);
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.contato a:hover {
+  text-decoration: underline;
+}
+
+/* ÁREA DO BRASÃO */
+
+.area-brasao {
+  margin-bottom: 16px;
+  padding: 20px;
+  border: 1px solid #dcece7;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #e3f4ee, #f8fcfb);
+  text-align: center;
+}
+
+.area-brasao img {
+  display: block;
+  max-width: 85%;
+  max-height: 220px;
+  margin: 0 auto 12px;
+  object-fit: contain;
+}
+
+.simbolo-brasao {
+  color: #8bcbb8;
+  font-size: 70px;
+  line-height: 1.2;
+}
+
+/* REGISTROS */
+
+.registro-item {
+  margin: 10px 0;
+  padding: 13px;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  background: white;
+  overflow-wrap: anywhere;
+}
+
+.registro-item strong {
+  color: var(--azul);
+}
+
+.registro-item p {
+  margin: 6px 0;
+  font-size: 13px;
+}
+
+.registro-item small {
+  color: #607b8a;
+}
+
+.registro-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.registro-acoes button {
+  padding: 7px 10px;
+  border: 1px solid var(--borda);
+  border-radius: 7px;
+  background: #f4f8f8;
+  color: var(--azul);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* FAIXA INFERIOR */
+
+.faixa-final {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 8px 0 20px;
+  padding: 20px;
+  border: 1px solid #dcece7;
+  border-radius: 14px;
+  background: linear-gradient(100deg, #e7f6f1, #f4fbf8);
+}
+
+.faixa-final p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* RODAPÉ */
+
+footer {
+  position: relative;
+  z-index: 2;
+  padding: 24px 16px;
+  background: linear-gradient(100deg, #06466b, #087e70);
+  color: white;
+  text-align: center;
+  font-size: 12px;
+}
+
+footer strong {
+  font-size: 17px;
+}
+
+footer p {
+  margin: 8px 0 0;
+}
+
+/* CELULAR E TABLET */
+
+@media (max-width: 760px) {
+  .cabecalho {
+    padding: 24px 14px;
+  }
+
+  .cabecalho-conteudo {
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  .logo {
+    width: 54px;
+    height: 54px;
+    font-size: 26px;
+  }
+
+  h1 {
+    font-size: clamp(29px, 7.5vw, 43px);
+    letter-spacing: -.5px;
+  }
+
+  .etiqueta {
+    padding: 4px 9px;
+    font-size: 9px;
+  }
+
+  .slogan {
+    font-size: 15px;
+  }
+
+  .subtitulo {
+    font-size: 12px;
+  }
+
+  .brasao-fundo {
+    top: 57%;
+    right: -8%;
+    width: 55vw;
+    opacity: .07;
+  }
+
+  .menu {
+    padding: 7px 8px;
+    gap: 3px;
+  }
+
+  .menu a {
+    padding: 9px 8px;
+    font-size: 11px;
+  }
+
+  main {
+    margin: 16px auto;
+    padding: 0 12px;
+  }
+
+  .colunas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .cartao {
+    padding: 17px;
+  }
+
+  h2 {
+    font-size: 21px;
+  }
+
+  .duas-colunas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .faixa-final {
+    align-items: flex-start;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 380px) {
+  .logo {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .menu a {
+    padding: 8px 6px;
+    font-size: 10px;
+  }
+
+  .cartao {
+    padding: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- DESENHO ILUSTRATIVO DO BRASÃO NO FUNDO -->
+<div class="brasao-fundo" aria-hidden="true">
+<svg viewBox="0 0 360 470"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <g fill="none"
+     stroke="currentColor"
+     stroke-width="5"
+     stroke-linejoin="round">
+
+    <!-- Escudo -->
+    <path d="M48 75 H312 L300 279
+      Q288 351 180 407
+      Q72 351 60 279 Z"
+      fill="currentColor"
+      fill-opacity=".10"/>
+
+    <!-- Coroa -->
+    <path d="M83 72 L96 30 L128 54
+      L153 13 L180 49 L207 13
+      L232 54 L264 30 L277 72 Z"/>
+
+    <path d="M70 84 H290"/>
+
+    <!-- Divisão -->
+    <path d="M60 188 H300"/>
+
+    <!-- Símbolo central decorativo -->
+    <circle cx="180" cy="145" r="34"/>
+    <path d="M180 118 V172 M153 145 H207
+      M161 126 L199 164 M199 126 L161 164"/>
+
+    <!-- Ondas -->
+    <path d="M70 278 Q96 260 122 278
+      T174 278 T226 278 T290 278"/>
+
+    <path d="M65 304 Q91 286 117 304
+      T169 304 T221 304 T285 304"/>
+
+    <path d="M60 330 Q86 312 112 330
+      T164 330 T216 330 T280 330"/>
+
+    <!-- Faixa -->
+    <path d="M83 374 Q180 432 277 374"/>
+  </g>
+
+  <text x="180" y="447"
+        fill="currentColor"
+        font-family="Arial, sans-serif"
+        font-size="27"
+        font-weight="bold"
+        text-anchor="middle"
+        letter-spacing="4">SOBRAL</text>
+</svg>
+</div>
+
+<!-- CABEÇALHO -->
+<header class="cabecalho">
+  <div class="cabecalho-conteudo">
+
+    <div class="logo" aria-hidden="true">🏙️</div>
+
+    <div>
+      <span class="etiqueta">
+        PROJETO DE CIDADANIA DIGITAL
+      </span>
+
+      <h1>
+        Sobral <span class="destaque">Resolve</span>
+      </h1>
+
+      <p class="slogan">
+        Sua cidade melhor começa com a sua voz.
+      </p>
+
+      <p class="subtitulo">
+        Registre problemas, informe o local e ajude Sobral a avançar.
+      </p>
+    </div>
+
+  </div>
+</header>
+
+<!-- MENU DE NAVEGAÇÃO -->
+<nav aria-label="Menu principal">
+  <div class="menu">
+    <a href="#inicio">⌂ Início</a>
+    <a href="#registrar">✎ Registrar problema</a>
+    <a href="#setores">▥ Setores responsáveis</a>
+    <a href="#registros">▤ Meus registros</a>
+  </div>
+</nav>
+
+<main id="inicio">
+
+<div class="colunas">
+
+<!-- COLUNA PRINCIPAL -->
+<section>
+
+  <!-- COMO FUNCIONA -->
+  <article class="cartao">
+    <div class="cabecalho-cartao">
+      <div class="icone" aria-hidden="true">💡</div>
+
+      <div>
+        <h2>Como funciona?</h2>
+
+        <p class="texto-secundario">
+          Registre o que está acontecendo, informe o bairro
+          e o endereço e, se possível, inclua uma foto.
+          O sistema sugere uma categoria e prepara uma mensagem
+          para você revisar e encaminhar.
+        </p>
+      </div>
+    </div>
+
+    <div class="aviso">
+      <strong>Importante:</strong>
+      este é um projeto demonstrativo independente.
+      Não é integrado à Prefeitura de Sobral e não gera
+      protocolo oficial.
+    </div>
+  </article>
+
+  <!-- FORMULÁRIO -->
+  <article class="cartao" id="registrar">
+
+    <div class="cabecalho-cartao">
+      <div class="icone" aria-hidden="true">📷</div>
+
+      <div>
+        <h2>Registrar um problema</h2>
+
+        <p class="texto-secundario">
+          Preencha as informações abaixo.
+          Evite fotografar rostos, documentos ou dados pessoais
+          de outras pessoas.
+        </p>
+      </div>
+    </div>
+
+    <form id="formulario">
+
+      <label for="descricao">
+        1. O que está acontecendo?
+      </label>
+
+      <textarea
+        id="descricao"
+        name="descricao"
+        required
+        maxlength="1200"
+        placeholder="Ex.: tem um buraco grande na rua em frente à praça..."
+      ></textarea>
+
+      <p class="ajuda">
+        Descreva o problema com suas próprias palavras.
+      </p>
+
+      <label for="categoria">
+        2. Categoria do problema
+      </label>
+
+      <select id="categoria" name="categoria" required>
+        <option value="">Selecione uma categoria</option>
+        <option value="iluminacao">Iluminação pública</option>
+        <option value="limpeza">Lixo, entulho ou coleta</option>
+        <option value="buraco">Buraco ou calçamento danificado</option>
+        <option value="agua">Água, esgoto ou vazamento</option>
+        <option value="transito">Trânsito ou sinalização</option>
+        <option value="meioambiente">Árvore ou meio ambiente</option>
+        <option value="saude">Saúde</option>
+        <option value="outro">Outro problema</option>
+      </select>
+
+      <label for="foto">
+        3. Foto do problema (opcional)
+      </label>
+
+      <input
+        type="file"
+        id="foto"
+        name="foto"
+        accept="image/*"
+      >
+
+      <p class="ajuda">
+        A foto fica selecionada neste navegador. Este exemplo
+        não a envia automaticamente; anexe-a manualmente
+        à conversa do WhatsApp, se necessário.
+      </p>
+
+      <div class="duas-colunas">
+        <div>
+          <label for="bairro">4. Bairro</label>
+
+          <input
+            type="text"
+            id="bairro"
+            name="bairro"
+            required
+            maxlength="120"
+            placeholder="Ex.: Sinhá Saboia"
+          >
+        </div>
+
+        <div>
+          <label for="rua">5. Rua ou ponto de referência</label>
+
+          <input
+            type="text"
+            id="rua"
+            name="rua"
+            required
+            maxlength="200"
+            placeholder="Ex.: próximo à escola, na Rua..."
+          >
+        </div>
+      </div>
+
+      <label for="nome">6. Seu nome (opcional)</label>
+
+      <input
+        type="text"
+        id="nome"
+        name="nome"
+        maxlength="120"
+        autocomplete="name"
+        placeholder="Seu nome"
+      >
+
+      <div class="aviso" id="sugestao" aria-live="polite">
+        Preencha a descrição e escolha uma categoria para
+        identificar o setor sugerido.
+      </div>
+
+      <button class="botao botao-largo" type="submit">
+        ➤ Identificar e preparar mensagem
+      </button>
+
+      <p class="ajuda">
+        Revise a mensagem antes de enviá-la.
+        O registro neste site não substitui uma solicitação oficial.
+      </p>
+
+    </form>
+
+    <div id="resultado" aria-live="polite"></div>
+
+  </article>
+
+  <!-- MEUS REGISTROS -->
+  <article class="cartao" id="registros">
+
+    <div class="cabecalho-cartao">
+      <div class="icone" aria-hidden="true">▤</div>
+
+      <div>
+        <h2>Meus registros</h2>
+
+        <p class="texto-secundario">
+          Consulte os registros guardados neste navegador.
+        </p>
+      </div>
+    </div>
+
+    <div id="listaRegistros">
+      <p class="texto-secundario">
+        Nenhum registro salvo ainda.
+      </p>
+    </div>
+
+    <button
+      class="botao botao-claro"
+      id="limpar"
+      type="button"
+    >
+      Limpar meus registros
+    </button>
+
+    <p class="ajuda">
+      Os registros ficam apenas neste navegador.
+      Não são enviados a um servidor nem sincronizados
+      automaticamente entre dispositivos.
+    </p>
+
+  </article>
+
+</section>
+
+<!-- COLUNA LATERAL -->
+<aside>
+
+  <!-- BRASÃO -->
+  <article class="area-brasao">
+
+    <img
+      src="brasao-sobral.png"
+      id="imagemBrasao"
+      alt="Brasão do município de Sobral, Ceará"
+      hidden
+    >
+
+    <div class="simbolo-brasao" id="simboloBrasao"
+         aria-hidden="true">♜</div>
+
+    <h3>Sobral — Ceará</h3>
+
+    <p class="texto-secundario">
+      Espaço reservado para o brasão oficial do município.
+    </p>
+
+    <p class="ajuda">
+      Para usar a imagem original, salve o arquivo oficial
+      como brasao-sobral.png na mesma pasta deste HTML.
+    </p>
+
+  </article>
+
+  <!-- SETOR SUGERIDO -->
+  <article class="cartao" id="setores">
+
+    <div class="cabecalho-lateral">
+      <div class="icone" aria-hidden="true">🏛️</div>
+      <h3>Setor sugerido</h3>
+    </div>
+
+    <p class="texto-secundario">
+      A categoria escolhida indica o setor que pode ser
+      responsável pelo problema.
+    </p>
+
+    <div class="aviso" id="setorLateral" aria-live="polite">
+      Selecione uma categoria no formulário.
+    </div>
+
+  </article>
+
+  <!-- CONTATOS EDITÁVEIS -->
+  <article class="cartao">
+
+    <div class="cabecalho-lateral">
+      <div class="icone" aria-hidden="true">☎</div>
+      <h3>Contatos dos setores</h3>
+    </div>
+
+    <p class="texto-secundario">
+      Configure os números oficiais de cada setor no código.
+      Os contatos abaixo ficam desativados até serem preenchidos.
+    </p>
+
+    <div id="listaContatos"></div>
+
+    <div class="aviso">
+      <strong>Atenção:</strong> confirme os telefones e os
+      WhatsApps diretamente com os canais oficiais antes
+      de publicar este site.
+    </div>
+
+    <div class="contato">
+      <strong>Portal da Prefeitura de Sobral</strong>
+      <p>Consulte os serviços e contatos oficiais.</p>
+
+      <a href="https://www.sobral.ce.gov.br/"
+         target="_blank"
+         rel="noopener noreferrer">
+        Acessar portal oficial ↗
+      </a>
+    </div>
+
+  </article>
+
+  <!-- INFORMAÇÕES -->
+  <article class="cartao">
+    <div class="cabecalho-lateral">
+      <div class="icone" aria-hidden="true">✓</div>
+      <h3>Cidadania digital</h3>
+    </div>
+
+    <p class="texto-secundario">
+      O objetivo do Sobral Resolve é facilitar a organização
+      das informações sobre problemas urbanos e ajudar o
+      cidadão a encontrar os canais adequados.
+    </p>
+  </article>
+
+</aside>
+</div>
+
+<!-- FAIXA INFERIOR -->
+<section class="faixa-final">
+  <div class="icone" aria-hidden="true">🛡️</div>
+
+  <div>
+    <h3>Juntos por uma Sobral melhor</h3>
+
+    <p>
+      Sua participação faz a diferença.
+      Registre, compartilhe e ajude a construir uma cidade
+      mais organizada, segura e eficiente para todos.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- RODAPÉ -->
+<footer>
+  <strong>Sobral Resolve</strong>
+
+  <p>
+    Projeto demonstrativo de cidadania digital.
+    Não é um canal oficial da Prefeitura de Sobral.
+  </p>
+</footer>
+
+<script>
+/*
+==================================================
+PERSONALIZE AQUI OS CONTATOS DE CADA SETOR
+==================================================
+
+Para ativar o WhatsApp de um setor:
+1. Confirme o número oficial.
+2. Escreva o DDI e o DDD junto com o número.
+3. Não use espaços, parênteses ou traços.
+
+Exemplo de formato brasileiro:
+5588999999999
+
+Deixe phone vazio enquanto o número não for confirmado.
+Os números desta configuração são exemplos vazios,
+não contatos oficiais confirmados.
+*/
+
+const CONTACTS = {
+  iluminacao: {
+    label: "Iluminação pública",
+    department: "Setor de iluminação pública",
+    phone: ""
+  },
+
+  limpeza: {
+    label: "Lixo, entulho e coleta",
+    department: "Setor de limpeza urbana",
+    phone: ""
+  },
+
+  buraco: {
+    label: "Buracos e calçamento",
+    department: "Setor de infraestrutura",
+    phone: ""
+  },
+
+  agua: {
+    label: "Água e esgoto",
+    department: "Serviço de água e esgoto",
+    phone: ""
+  },
+
+  transito: {
+    label: "Trânsito e sinalização",
+    department: "Setor de trânsito",
+    phone: ""
+  },
+
+  meioambiente: {
+    label: "Árvores e meio ambiente",
+    department: "Setor de meio ambiente",
+    phone: ""
+  },
+
+  saude: {
+    label: "Saúde",
+    department: "Secretaria ou unidade de saúde responsável",
+    phone: ""
+  },
+
+  outro: {
+    label: "Outros problemas",
+    department: "Ouvidoria municipal",
+    phone: ""
+  }
+};
+
+/* CHAVE DE ARMAZENAMENTO LOCAL */
+
+const STORAGE_KEY = "sobralResolveRegistrosV1";
+
+/* ELEMENTOS DO SITE */
+
+const formulario = document.getElementById("formulario");
+const categoria = document.getElementById("categoria");
+const descricao = document.getElementById("descricao");
+const bairro = document.getElementById("bairro");
+const rua = document.getElementById("rua");
+const nome = document.getElementById("nome");
+const resultado = document.getElementById("resultado");
+const sugestao = document.getElementById("sugestao");
+const setorLateral = document.getElementById("setorLateral");
+
+/* IMAGEM OPCIONAL DO BRASÃO */
+
+const imagemBrasao = document.getElementById("imagemBrasao");
+const simboloBrasao = document.getElementById("simboloBrasao");
+
+imagemBrasao.addEventListener("load", function () {
+  imagemBrasao.hidden = false;
+  simboloBrasao.hidden = true;
+});
+
+imagemBrasao.addEventListener("error", function () {
+  imagemBrasao.hidden = true;
+  simboloBrasao.hidden = false;
+});
+
+/* ESCAPE PARA EXIBIR TEXTO SEM INTERPRETAR HTML */
+
+function escapar(texto) {
+  return String(texto ?? "").replace(/[&<>"']/g, function (caractere) {
+    const caracteres = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    };
+
+    return caracteres[caractere];
+  });
+}
+
+/* LEITURA E GRAVAÇÃO LOCAL */
+
+function obterRegistros() {
+  try {
+    const dados = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+
+    return Array.isArray(dados) ? dados : [];
+  } catch (erro) {
+    return [];
+  }
+}
+
+function salvarRegistros(registros) {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(registros.slice(0, 30))
+    );
+
+    return true;
+  } catch (erro) {
+    alert(
+      "Não foi possível salvar os registros neste navegador. " +
+      "Verifique as configurações de armazenamento."
+    );
+
+    return false;
+  }
+}
+
+/* ATUALIZA O SETOR SUGERIDO */
+
+function atualizarSetor() {
+  const setor = CONTACTS[categoria.value];
+
+  if (!setor) {
+    sugestao.textContent =
+      "Preencha a descrição e escolha uma categoria para " +
+      "identificar o setor sugerido.";
+
+    setorLateral.textContent =
+      "Selecione uma categoria no formulário.";
+
+    return;
+  }
+
+  sugestao.textContent =
+    "Setor sugerido: " + setor.department +
+    ". Confira o contato antes de encaminhar a mensagem.";
+
+  setorLateral.textContent =
+    setor.label + " — " + setor.department;
+}
+
+categoria.addEventListener("change", atualizarSetor);
+
+/* MOSTRA OS CONTATOS CONFIGURADOS */
+
+function mostrarContatos() {
+  const lista = document.getElementById("listaContatos");
+
+  lista.innerHTML = Object.entries(CONTACTS).map(function ([chave, setor]) {
+    const numero = String(setor.phone || "").replace(/\D/g, "");
+
+    let acao = "";
+
+    if (numero.length >= 12 && numero.length <= 13) {
+      acao =
+        '<a href="https://wa.me/' + escapar(numero) +
+        '" target="_blank" rel="noopener noreferrer">' +
+        'Abrir WhatsApp ↗</a>';
+    } else {
+      acao =
+        '<span class="ajuda">Contato ainda não configurado</span>';
+    }
+
+    return `
+      <div class="contato">
+        <strong>${escapar(setor.label)}</strong>
+        <p>${escapar(setor.department)}</p>
+        ${acao}
+      </div>
+    `;
+  }).join("");
+}
+
+/* MOSTRA OS REGISTROS */
+
+function mostrarRegistros() {
+  const registros = obterRegistros();
+  const lista = document.getElementById("listaRegistros");
+
+  if (registros.length === 0) {
+    lista.innerHTML =
+      '<p class="texto-secundario">' +
+      'Nenhum registro salvo ainda.' +
+      '</p>';
+
+    return;
+  }
+
+  lista.innerHTML = registros.map(function (registro, indice) {
+    return `
+      <div class="registro-item">
+        <strong>${escapar(registro.categoria)}</strong>
+        <p>${escapar(registro.descricao)}</p>
+        <p>
+          ${escapar(registro.bairro)} —
+          ${escapar(registro.rua)}
+        </p>
+        <small>${escapar(registro.data)}</small>
+
+        <div class="registro-acoes">
+          <button type="button"
+            data-acao="mensagem"
+            data-indice="${indice}">
+            Ver mensagem
+          </button>
+
+          <button type="button"
+            data-acao="excluir"
+            data-indice="${indice}">
+            Excluir
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+/* CRIA A MENSAGEM PARA O SETOR */
+
+function criarMensagem(dados) {
+  return [
+    "Olá! Gostaria de informar um problema em Sobral.",
+    "",
+    "Categoria: " + dados.categoria,
+    "Descrição: " + dados.descricao,
+    "Bairro: " + dados.bairro,
+    "Rua ou referência: " + dados.rua,
+    dados.nome ? "Nome: " + dados.nome : ""
+  ].filter(Boolean).join("\n");
+}
+
+/* PREPARA O REGISTRO E O WHATSAPP */
+
+formulario.addEventListener("submit", function (evento) {
+  evento.preventDefault();
+
+  const setor = CONTACTS[categoria.value];
+
+  if (!setor) {
+    alert("Selecione uma categoria.");
+    return;
+  }
+
+  const dados = {
+    categoria: setor.label,
+    department: setor.department,
+    descricao: descricao.value.trim(),
+    bairro: bairro.value.trim(),
+    rua: rua.value.trim(),
+    nome: nome.value.trim(),
+    data: new Date().toLocaleString("pt-BR")
+  };
+
+  if (!dados.descricao || !dados.bairro || !dados.rua) {
+    alert("Preencha a descrição, o bairro e a rua.");
+    return;
+  }
+
+  const registros = obterRegistros();
+  registros.unshift(dados);
+
+  salvarRegistros(registros);
+  mostrarRegistros();
+
+  const mensagem = criarMensagem(dados);
+  const numero = String(setor.phone || "").replace(/\D/g, "");
+
+  resultado.replaceChildren();
+
+  const caixa = document.createElement("div");
+  caixa.className = "aviso";
+
+  const titulo = document.createElement("h3");
+  titulo.textContent = "Registro preparado";
+
+  const texto = document.createElement("p");
+  texto.textContent =
+    "Setor sugerido: " + setor.department +
+    ". Revise a mensagem antes de encaminhar.";
+
+  const campo = document.createElement("textarea");
+  campo.readOnly = true;
+  campo.rows = 7;
+  campo.value = mensagem;
+  campo.setAttribute("aria-label", "Mensagem preparada");
+
+  caixa.append(titulo, texto, campo);
+
+  const botaoCopiar = document.createElement("button");
+  botaoCopiar.type = "button";
+  botaoCopiar.className = "botao botao-largo";
+  botaoCopiar.textContent = "Copiar mensagem";
+
+  botaoCopiar.addEventListener("click", async function () {
+    try {
+      await navigator.clipboard.writeText(mensagem);
+      botaoCopiar.textContent = "Mensagem copiada!";
+    } catch (erro) {
+      campo.focus();
+      campo.select();
+
+      try {
+        const copiado = document.execCommand("copy");
+        botaoCopiar.textContent = copiado
+          ? "Mensagem copiada!"
+          : "Copie o texto selecionado";
+      } catch (erroCopia) {
+        botaoCopiar.textContent = "Copie o texto selecionado";
+      }
+    }
+  });
+
+  caixa.appendChild(botaoCopiar);
+
+  if (numero.length >= 12 && numero.length <= 13) {
+    const link = document.createElement("a");
+    link.className = "botao botao-largo botao-whatsapp";
+    link.href =
+      "https://wa.me/" + numero +
+      "?text=" + encodeURIComponent(mensagem);
+
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Abrir WhatsApp do setor";
+
+    caixa.appendChild(link);
+  } else {
+    const observacao = document.createElement("p");
+    observacao.className = "ajuda";
+    observacao.textContent =
+      "O WhatsApp deste setor ainda não foi configurado. " +
+      "Copie a mensagem e utilize o canal oficial apropriado.";
+
+    caixa.appendChild(observacao);
+
+    const portal = document.createElement("a");
+    portal.href = "https://www.sobral.ce.gov.br/";
+    portal.target = "_blank";
+    portal.rel = "noopener noreferrer";
+    portal.textContent = "Consultar canais oficiais da Prefeitura";
+
+    caixa.appendChild(portal);
+  }
+
+  resultado.appendChild(caixa);
+
+  resultado.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+});
+
+/* AÇÕES NOS REGISTROS SALVOS */
+
+document.getElementById("listaRegistros")
+.addEventListener("click", function (evento) {
+  const botao = evento.target.closest("button[data-acao]");
+
+  if (!botao) return;
+
+  const indice = Number(botao.dataset.indice);
+  const registros = obterRegistros();
+
+  if (!Number.isInteger(indice) ||
+      indice < 0 ||
+      indice >= registros.length) {
+    return;
+  }
+
+  if (botao.dataset.acao === "excluir") {
+    if (confirm("Deseja excluir este registro?")) {
+      registros.splice(indice, 1);
+      salvarRegistros(registros);
+      mostrarRegistros();
+    }
+
+    return;
+  }
+
+  if (botao.dataset.acao === "mensagem") {
+    const registro = registros[indice];
+    const mensagem = criarMensagem(registro);
+
+    resultado.replaceChildren();
+
+    const caixa = document.createElement("div");
+    caixa.className = "aviso";
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = "Mensagem do registro";
+
+    const campo = document.createElement("textarea");
+    campo.readOnly = true;
+    campo.rows = 7;
+    campo.value = mensagem;
+
+    const copiar = document.createElement("button");
+    copiar.type = "button";
+    copiar.className = "botao botao-largo";
+    copiar.textContent = "Copiar mensagem";
+
+    copiar.addEventListener("click", async function () {
+      try {
+        await navigator.clipboard.writeText(mensagem);
+        copiar.textContent = "Mensagem copiada!";
+      } catch (erro) {
+        campo.focus();
+        campo.select();
+        copiar.textContent = "Copie o texto selecionado";
+      }
+    });
+
+    caixa.append(titulo, campo, copiar);
+
+    const numero = String(
+      CONTACTS[
+        Object.keys(CONTACTS).find(function (chave) {
+          return CONTACTS[chave].label === registro.categoria;
+        })
+      ]?.phone || ""
+    ).replace(/\D/g, "");
+
+    if (numero.length >= 12 && numero.length <= 13) {
+      const link = document.createElement("a");
+      link.className = "botao botao-largo botao-whatsapp";
+      link.href =
+        "https://wa.me/" + numero +
+        "?text=" + encodeURIComponent(mensagem);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Abrir WhatsApp";
+
+      caixa.appendChild(link);
+    }
+
+    resultado.appendChild(caixa);
+    resultado.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+  }
+});
+
+/* LIMPAR REGISTROS */
+
+document.getElementById("limpar")
+.addEventListener("click", function () {
+  if (confirm("Deseja apagar todos os registros salvos neste navegador?")) {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      mostrarRegistros();
+    } catch (erro) {
+      alert("Não foi possível limpar os registros.");
+    }
+  }
+});
+
+/* INICIALIZAÇÃO */
+
+mostrarContatos();
+mostrarRegistros();
+atualizarSetor();
+</script>
+
+</body>
+</html>
