@@ -1,0 +1,821 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#087e70">
+  <title>Sobral Resolve</title>
+
+  <style>
+    :root {
+      --verde: #07965b;
+      --escuro: #087e70;
+      --azul: #06466b;
+      --fundo: #f0f8f7;
+      --texto: #183746;
+      --borda: #d5e5e4;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--texto);
+      background: var(--fundo);
+    }
+
+    header {
+      padding: 28px 16px;
+      color: white;
+      background: linear-gradient(115deg, var(--verde), var(--escuro), var(--azul));
+    }
+
+    .cabecalho {
+      max-width: 1150px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      border: 2px solid #ffffff80;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+
+    .etiqueta {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: #ffffff25;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    h1 { font-size: clamp(28px, 5vw, 43px); margin: 8px 0; }
+    h1 span { color: #67e3ae; }
+    header p { margin: 5px 0; }
+    .subtitulo { font-size: 13px; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+      background: white;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    nav a {
+      padding: 10px 13px;
+      border-radius: 8px;
+      color: var(--azul);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    nav a:hover { background: var(--escuro); color: white; }
+
+    main {
+      max-width: 1150px;
+      margin: 25px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(250px, .9fr);
+      gap: 20px;
+    }
+
+    .coluna {
+      display: grid;
+      align-content: start;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+      background: #ffffffed;
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      box-shadow: 0 4px 16px #06466b0c;
+    }
+
+    .titulo-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .icone {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--verde);
+      color: white;
+      font-size: 19px;
+    }
+
+    h2 { margin: 0; color: var(--azul); font-size: 19px; }
+    h3 { margin: 0 0 7px; color: var(--azul); font-size: 15px; }
+    p { line-height: 1.5; }
+
+    .texto-ajuda, .pequeno {
+      color: #526b73;
+      font-size: 12px;
+    }
+
+    .texto-ajuda { margin: 5px 0 12px; }
+
+    .aviso {
+      padding: 12px;
+      margin-top: 12px;
+      border-left: 4px solid var(--verde);
+      border-radius: 7px;
+      background: #eaf7f1;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .aviso-alerta {
+      background: #fff8e5;
+      border-color: #dfa000;
+    }
+
+    label {
+      display: block;
+      margin: 13px 0 6px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1dfe1;
+      border-radius: 8px;
+      background: white;
+      color: var(--texto);
+      font: inherit;
+      font-size: 14px;
+    }
+
+    textarea { min-height: 95px; resize: vertical; }
+
+    input:focus, textarea:focus, select:focus {
+      outline: 2px solid #07965b45;
+      border-color: var(--verde);
+    }
+
+    .foto-area {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .foto-escolher {
+      padding: 12px;
+      border: 1px dashed #b9cece;
+      border-radius: 9px;
+      background: #f7fafb;
+    }
+
+    .foto-escolher input { padding: 5px 0; border: 0; }
+
+    #previa {
+      display: none;
+      width: 100%;
+      height: 170px;
+      object-fit: contain;
+      background: #edf4f4;
+      border: 1px solid var(--borda);
+      border-radius: 9px;
+    }
+
+    .botao {
+      display: inline-block;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--verde);
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .botao:hover { filter: brightness(.94); }
+    .botao-azul { background: var(--azul); }
+
+    .botao-principal {
+      width: 100%;
+      margin-top: 16px;
+      background: linear-gradient(90deg, var(--verde), var(--escuro));
+    }
+
+    .botao:disabled { opacity: .6; cursor: wait; }
+
+    .resultado {
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid var(--borda);
+      border-radius: 9px;
+      background: #f5faf8;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .resultado:empty { display: none; }
+
+    .registro {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--borda);
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 20px;
+      background: #e4f5ea;
+      color: #126a43;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .faixa-final {
+      max-width: 1118px;
+      margin: 0 auto 24px;
+      padding: 18px;
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      background: linear-gradient(100deg, #e5f7ef, #f9fdfc);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    footer {
+      padding: 24px 16px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(100deg, var(--azul), var(--escuro));
+    }
+
+    /* Marca-d'água decorativa. Para usar o brasão oficial,
+       coloque o arquivo autorizado em brasao-sobral.png. */
+    .marca-agua {
+      position: fixed;
+      right: -45px;
+      top: 35%;
+      width: 310px;
+      opacity: .055;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @media (max-width: 760px) {
+      main { grid-template-columns: 1fr; margin-top: 15px; }
+      .card { padding: 16px; }
+      .foto-area { grid-template-columns: 1fr; }
+      #previa { height: 190px; }
+      .faixa-final { margin: 0 16px 20px; }
+      nav { justify-content: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="cabecalho">
+      <div class="logo" aria-hidden="true">🏙️</div>
+      <div>
+        <div class="etiqueta">PROJETO DE CIDADANIA DIGITAL</div>
+        <h1>Sobral <span>Resolve</span></h1>
+        <p>Sua cidade melhor começa com a sua voz.</p>
+        <p class="subtitulo">Registre problemas, informe o local e ajude Sobral a avançar.</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#inicio">⌂ Início</a>
+    <a href="#registrar">☑ Registrar problema</a>
+    <a href="#consultar">⌕ Consultar protocolo</a>
+    <a href="#registros">▤ Meus registros</a>
+  </nav>
+
+  <main id="inicio">
+    <div class="coluna">
+      <section class="card">
+        <div class="titulo-card">
+          <div class="icone">♧</div>
+          <div>
+            <h2>Como funciona?</h2>
+            <p class="texto-ajuda">
+              Envie uma foto e descreva o problema. A inteligência artificial
+              pode analisar a imagem, identificar o tipo de ocorrência e sugerir
+              o setor responsável, para você revisar antes de encaminhar.
+            </p>
+          </div>
+        </div>
+        <div class="aviso">
+          <strong>Importante:</strong> esta demonstração não está integrada à
+          Prefeitura de Sobral. Os protocolos locais não são protocolos oficiais.
+        </div>
+      </section>
+
+      <section class="card" id="registrar">
+        <div class="titulo-card">
+          <div class="icone">📷</div>
+          <div>
+            <h2>Registrar um problema</h2>
+            <p class="texto-ajuda">
+              Evite fotografar rostos, documentos, placas de veículos ou dados pessoais.
+            </p>
+          </div>
+        </div>
+
+        <form id="formulario">
+          <label for="descricao">1. Descreva o problema</label>
+          <textarea id="descricao" maxlength="1500"
+            placeholder="Ex.: existe um buraco grande na rua..." required></textarea>
+
+          <label for="foto">2. Foto do problema</label>
+          <div class="foto-area">
+            <div class="foto-escolher">
+              <input id="foto" type="file" accept="image/*" capture="environment">
+              <p class="pequeno">Tire uma foto com o celular ou selecione uma imagem.</p>
+            </div>
+            <img id="previa" alt="Prévia da foto selecionada">
+          </div>
+
+          <label for="bairro">3. Bairro</label>
+          <input id="bairro" maxlength="100" placeholder="Ex.: Sinhá Sabóia" required>
+
+          <label for="local">4. Rua ou ponto de referência</label>
+          <input id="local" maxlength="200" placeholder="Ex.: próximo à escola..." required>
+
+          <label for="setor">5. Setor responsável (sugestão)</label>
+          <select id="setor">
+            <option value="auto">Sugerir setor automaticamente</option>
+            <option value="saae">SAAE — água e esgoto</option>
+            <option value="enel">Enel — energia elétrica</option>
+            <option value="sesep">SESEP — limpeza e iluminação pública</option>
+            <option value="ouvidoria">Ouvidoria — outros problemas</option>
+          </select>
+
+          <div class="aviso">
+            <strong>IA visual:</strong> a foto e a descrição serão enviadas ao
+            servidor configurado para análise. Se o servidor não estiver instalado,
+            a análise por imagem não funcionará.
+          </div>
+
+          <button class="botao botao-principal" type="submit" id="identificar">
+            ✨ Analisar foto com IA e registrar
+          </button>
+        </form>
+
+        <div id="resultado" class="resultado" aria-live="polite"></div>
+      </section>
+
+      <section class="card" id="registros">
+        <div class="titulo-card">
+          <div class="icone">▤</div>
+          <div>
+            <h2>Meus registros</h2>
+            <p class="texto-ajuda">Registros guardados neste navegador.</p>
+          </div>
+        </div>
+        <div id="listaRegistros"></div>
+      </section>
+    </div>
+
+    <aside class="coluna">
+      <section class="card">
+        <div class="titulo-card">
+          <div class="icone">♙</div>
+          <div>
+            <h3>Setor sugerido pela IA</h3>
+            <p class="pequeno">O resultado aparece após a análise.</p>
+          </div>
+        </div>
+        <div id="setorSugerido" class="aviso">
+          Envie uma foto e descreva o problema para iniciar.
+        </div>
+      </section>
+
+      <section class="card" id="consultar">
+        <div class="titulo-card">
+          <div class="icone" style="background:#06466b">⌕</div>
+          <div>
+            <h3>Consultar protocolo</h3>
+            <p class="pequeno">Digite o código gerado neste navegador.</p>
+          </div>
+        </div>
+        <form id="formConsulta">
+          <label for="protocoloBusca">Número do protocolo</label>
+          <input id="protocoloBusca" placeholder="Ex.: SR-12345678" required>
+          <button class="botao botao-azul" type="submit">Consultar</button>
+        </form>
+        <div id="resultadoConsulta" class="resultado" aria-live="polite"></div>
+      </section>
+
+      <section class="card">
+        <div class="titulo-card">
+          <div class="icone" style="background:#06466b">▤</div>
+          <div>
+            <h3>Acompanhe sua reclamação</h3>
+            <p class="pequeno">Consulte seu protocolo para ver o registro salvo.</p>
+          </div>
+        </div>
+        <div class="aviso aviso-alerta">
+          O status não é atualizado pela Prefeitura. Para acompanhamento real
+          por todos os moradores, é necessário banco de dados e servidor compartilhado.
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <section class="faixa-final">
+    <div class="icone">✓</div>
+    <div>
+      <h3>Juntos por uma Sobral melhor</h3>
+      <p class="pequeno">
+        Sua participação faz a diferença. Ajude a construir uma cidade
+        mais organizada, segura e eficiente para todos.
+      </p>
+    </div>
+    <strong style="margin-left:auto;color:#087e70;font-style:italic">
+      Sobral é de todos!
+    </strong>
+  </section>
+
+  <footer>
+    <strong>Sobral Resolve</strong>
+    <p class="pequeno" style="color:white">
+      Projeto demonstrativo independente, não é um canal oficial da Prefeitura de Sobral.
+    </p>
+  </footer>
+
+  <script>
+    /*
+      INTEGRAÇÃO COM IA:
+      Configure um servidor que aceite POST /api/analisar-problema
+      com multipart/form-data contendo:
+        - foto: arquivo da imagem
+        - descricao: descrição digitada
+
+      Exemplo de resposta JSON do servidor:
+      {
+        "problema": "Buraco na via",
+        "setor": "sesep",
+        "confianca": 0.91,
+        "justificativa": "A imagem mostra danos no pavimento."
+      }
+
+      Não coloque a chave secreta da IA neste arquivo HTML.
+    */
+
+    const API_IA = "/api/analisar-problema";
+
+    const setores = {
+      saae: {
+        nome: "SAAE — água e esgoto",
+        telefone: "5588982324926"
+      },
+      enel: {
+        nome: "Enel — energia elétrica",
+        telefone: "5521996019608"
+      },
+      sesep: {
+        nome: "SESEP — limpeza e iluminação pública",
+        telefone: "5588981248299"
+      },
+      ouvidoria: {
+        nome: "Ouvidoria de Sobral",
+        telefone: "5588981135442"
+      }
+    };
+
+    const $ = id => document.getElementById(id);
+    let fotoSelecionada = null;
+    let analiseIA = null;
+
+    $("foto").addEventListener("change", function () {
+      fotoSelecionada = this.files[0] || null;
+      analiseIA = null;
+
+      const previa = $("previa");
+      previa.style.display = "none";
+      previa.removeAttribute("src");
+
+      if (!fotoSelecionada) return;
+
+      if (!fotoSelecionada.type.startsWith("image/")) {
+        alert("Selecione um arquivo de imagem válido.");
+        this.value = "";
+        fotoSelecionada = null;
+        return;
+      }
+
+      if (fotoSelecionada.size > 10 * 1024 * 1024) {
+        alert("A foto deve ter no máximo 10 MB.");
+        this.value = "";
+        fotoSelecionada = null;
+        return;
+      }
+
+      previa.src = URL.createObjectURL(fotoSelecionada);
+      previa.style.display = "block";
+      $("setorSugerido").textContent =
+        "Foto selecionada. Clique em “Analisar foto com IA e registrar” para tentar identificar o problema.";
+    });
+
+    function sugerirSetorPeloTexto(descricao) {
+      const texto = descricao.toLocaleLowerCase("pt-BR");
+
+      if (/esgoto|vazamento|falta de água|cano quebrado|água potável/.test(texto)) {
+        return "saae";
+      }
+
+      if (/energia|fio caído|falta de luz|transformador|cabo elétrico/.test(texto)) {
+        return "enel";
+      }
+
+      if (/lixo|entulho|coleta|limpeza|poste apagado|iluminação|lâmpada|buraco|calçamento|pavimento/.test(texto)) {
+        return "sesep";
+      }
+
+      return "ouvidoria";
+    }
+
+    async function analisarFotoComIA() {
+      if (!fotoSelecionada) {
+        throw new Error("Selecione uma foto para a IA analisar a imagem.");
+      }
+
+      const dados = new FormData();
+      dados.append("foto", fotoSelecionada);
+      dados.append("descricao", $("descricao").value.trim());
+
+      const resposta = await fetch(API_IA, {
+        method: "POST",
+        body: dados
+      });
+
+      if (!resposta.ok) {
+        throw new Error(
+          "O servidor de IA não está disponível ou retornou um erro. " +
+          "Configure o endpoint /api/analisar-problema."
+        );
+      }
+
+      const resultado = await resposta.json();
+
+      if (!resultado || !resultado.problema || !setores[resultado.setor]) {
+        throw new Error("A resposta do servidor de IA está incompleta.");
+      }
+
+      return resultado;
+    }
+
+    function criarLinkWhatsApp(setor, registro) {
+      const mensagem =
+        "Olá! Gostaria de informar um problema em Sobral.\\n\\n" +
+        "Problema identificado: " + registro.problema + "\\n" +
+        "Descrição do morador: " + registro.descricao + "\\n" +
+        "Bairro: " + registro.bairro + "\\n" +
+        "Local: " + registro.local + "\\n" +
+        "Setor sugerido: " + setores[setor].nome + "\\n" +
+        "Protocolo local: " + registro.protocolo + "\\n\\n" +
+        "Como posso registrar oficialmente esta solicitação?";
+
+      return "https://wa.me/" + setores[setor].telefone +
+        "?text=" + encodeURIComponent(mensagem);
+    }
+
+    function obterRegistros() {
+      try {
+        return JSON.parse(localStorage.getItem("sobralRegistros") || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function salvarRegistros(registros) {
+      localStorage.setItem("sobralRegistros", JSON.stringify(registros));
+    }
+
+    function gerarProtocolo() {
+      return "SR-" + Date.now().toString().slice(-8);
+    }
+
+    function mostrarResultado(registro) {
+      const area = $("resultado");
+      area.replaceChildren();
+
+      const titulo = document.createElement("strong");
+      titulo.textContent = "Registro criado: " + registro.protocolo;
+      area.appendChild(titulo);
+
+      const texto = document.createElement("p");
+      texto.textContent =
+        "Problema identificado: " + registro.problema +
+        "\\nSetor sugerido: " + setores[registro.setor].nome +
+        "\\nStatus: salvo neste dispositivo.";
+      area.appendChild(texto);
+
+      if (registro.justificativa) {
+        const justificativa = document.createElement("p");
+        justificativa.textContent = "Análise da IA: " + registro.justificativa;
+        area.appendChild(justificativa);
+      }
+
+      if (typeof registro.confianca === "number") {
+        const confianca = document.createElement("p");
+        confianca.textContent =
+          "Confiança informada pelo servidor: " +
+          Math.round(registro.confianca * 100) + "%";
+        area.appendChild(confianca);
+      }
+
+      const link = document.createElement("a");
+      link.className = "botao";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.href = criarLinkWhatsApp(registro.setor, registro);
+      link.textContent = "Revisar mensagem no WhatsApp";
+
+      area.appendChild(link);
+
+      const aviso = document.createElement("p");
+      aviso.className = "pequeno";
+      aviso.textContent =
+        "Confira o setor e revise a mensagem antes de enviar. A foto não é anexada automaticamente.";
+      area.appendChild(aviso);
+    }
+
+    $("formulario").addEventListener("submit", async function (evento) {
+      evento.preventDefault();
+
+      const descricao = $("descricao").value.trim();
+      const bairro = $("bairro").value.trim();
+      const local = $("local").value.trim();
+
+      if (!descricao || !bairro || !local) {
+        alert("Preencha a descrição, o bairro e o local.");
+        return;
+      }
+
+      const botao = $("identificar");
+      botao.disabled = true;
+      botao.textContent = "Analisando...";
+
+      let analise = null;
+      let setor;
+
+      try {
+        if (fotoSelecionada) {
+          $("setorSugerido").textContent =
+            "Enviando a foto ao servidor para análise por IA...";
+          analise = await analisarFotoComIA();
+          setor = analise.setor;
+        } else {
+          $("setorSugerido").textContent =
+            "Nenhuma foto foi selecionada. O setor será sugerido somente pela descrição, não por IA visual.";
+          setor = sugerirSetorPeloTexto(descricao);
+        }
+
+        if ($("setor").value !== "auto") {
+          setor = $("setor").value;
+        }
+
+        const registro = {
+          protocolo: gerarProtocolo(),
+          descricao,
+          bairro,
+          local,
+          setor,
+          problema: analise ? analise.problema : "Sugestão baseada na descrição",
+          justificativa: analise ? (analise.justificativa || "") : "",
+          confianca: analise && typeof analise.confianca === "number"
+            ? analise.confianca : null,
+          data: new Date().toLocaleString("pt-BR"),
+          status: "Registrado neste dispositivo"
+        };
+
+        const registros = obterRegistros();
+        registros.unshift(registro);
+
+        try {
+          salvarRegistros(registros);
+        } catch {
+          throw new Error("Não foi possível salvar o registro no navegador.");
+        }
+
+        $("setorSugerido").textContent =
+          "Problema: " + registro.problema +
+          "\\nSetor sugerido: " + setores[setor].nome +
+          (registro.justificativa ? "\\nJustificativa: " + registro.justificativa : "");
+
+        renderizarRegistros();
+        mostrarResultado(registro);
+
+      } catch (erro) {
+        $("resultado").textContent = erro.message ||
+          "Não foi possível concluir a análise.";
+
+        $("setorSugerido").textContent =
+          "Não foi possível confirmar o setor pela foto. Verifique se o servidor de IA está configurado. " +
+          "Você pode tentar novamente ou remover a foto e registrar pela descrição.";
+      } finally {
+        botao.disabled = false;
+        botao.textContent = "✨ Analisar foto com IA e registrar";
+      }
+    });
+
+    $("formConsulta").addEventListener("submit", function (evento) {
+      evento.preventDefault();
+
+      const codigo = $("protocoloBusca").value.trim().toLowerCase();
+      const registro = obterRegistros().find(
+        item => item.protocolo.toLowerCase() === codigo
+      );
+
+      if (!registro) {
+        $("resultadoConsulta").textContent =
+          "Protocolo não encontrado neste navegador. Os registros desta demonstração não são compartilhados entre dispositivos.";
+        return;
+      }
+
+      $("resultadoConsulta").textContent =
+        "Protocolo: " + registro.protocolo +
+        "\\nProblema: " + registro.problema +
+        "\\nSetor sugerido: " + setores[registro.setor].nome +
+        "\\nStatus: " + registro.status +
+        "\\nData: " + registro.data;
+    });
+
+    function renderizarRegistros() {
+      const area = $("listaRegistros");
+      area.replaceChildren();
+
+      const registros = obterRegistros();
+
+      if (!registros.length) {
+        area.textContent = "Nenhum registro salvo neste navegador.";
+        return;
+      }
+
+      registros.forEach(registro => {
+        const bloco = document.createElement("article");
+        bloco.className = "registro";
+
+        const titulo = document.createElement("strong");
+        titulo.textContent = registro.problema;
+
+        const local = document.createElement("p");
+        local.className = "pequeno";
+        local.textContent = registro.bairro + " — " + registro.local;
+
+        const setor = document.createElement("p");
+        setor.textContent = "Setor sugerido: " + setores[registro.setor].nome;
+
+        const status = document.createElement("span");
+        status.className = "status";
+        status.textContent = registro.status;
+
+        const protocolo = document.createElement("p");
+        protocolo.className = "pequeno";
+        protocolo.textContent = registro.protocolo + " • " + registro.data;
+
+        bloco.append(titulo, local, setor, status, protocolo);
+        area.appendChild(bloco);
+      });
+    }
+
+    renderizarRegistros();
+  </script>
+</body>
+</html>
