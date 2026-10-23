@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b4778">
+  <meta name="description" content="Sobral Resolve: protótipo de participação cidadã, reclamações e sugestões para Sobral, Ceará.">
+  <title>Sobral Resolve | Sua cidade, mais perto de você</title>
+
+  <style>
+    :root {
+      --azul: #0b4778;
+      --azul-escuro: #08365d;
+      --verde: #14532d;
+      --verde-claro: #a7e3b3;
+      --fundo: #f3f7fa;
+      --texto: #172b3a;
+      --texto-suave: #526779;
+      --borda: #dbe5eb;
+      --branco: #ffffff;
+      --sombra: 0 8px 24px rgba(11, 71, 120, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fundo);
+      color: var(--texto);
+      font: 16px/1.6 Arial, Helvetica, sans-serif;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button, a, input, select, textarea {
+      outline-offset: 4px;
+    }
+
+    a {
+      color: var(--azul);
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid #f5bd35;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: auto;
+    }
+
+    .skip {
+      position: absolute;
+      left: -9999px;
+      top: 8px;
+      background: white;
+      color: black;
+      padding: 12px;
+      z-index: 100;
+    }
+
+    .skip:focus {
+      left: 8px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: white;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .head {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 12px 0;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      background: var(--azul);
+      color: white;
+      border-radius: 13px;
+      font-size: 25px;
+    }
+
+    .brand strong {
+      display: block;
+      color: var(--azul-escuro);
+      font-size: 1.15rem;
+    }
+
+    .brand small {
+      color: var(--texto-suave);
+    }
+
+    nav {
+      display: flex;
+      gap: 13px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .tools {
+      display: flex;
+      gap: 6px;
+    }
+
+    .tools button {
+      padding: 7px 10px;
+      background: white;
+      color: var(--azul);
+      border: 1px solid var(--borda);
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    .hero {
+      padding: 48px 0;
+      color: white;
+      background: linear-gradient(120deg, var(--azul-escuro), var(--azul) 55%, var(--verde));
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: #c7f0d1;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1.4px;
+      font-size: 0.78rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1.08;
+      margin: 12px 0;
+    }
+
+    .hero p {
+      color: #e3edf5;
+    }
+
+    .hero-panel {
+      padding: 22px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 18px;
+    }
+
+    .hero-panel li {
+      margin: 8px 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .btn-green {
+      background: var(--verde-claro);
+      color: #103a2a;
+    }
+
+    .btn-blue {
+      background: var(--azul);
+      color: white;
+    }
+
+    .btn-white {
+      background: white;
+      color: var(--azul);
+    }
+
+    .btn-outline {
+      border: 1px solid currentColor;
+      color: inherit;
+      background: transparent;
+    }
+
+    .btn:hover {
+      filter: brightness(0.96);
+    }
+
+    .section {
+      padding: 48px 0;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    .kicker {
+      color: var(--verde);
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 1.2px;
+    }
+
+    h2 {
+      color: var(--azul-escuro);
+      font-size: clamp(1.7rem, 3vw, 2.35rem);
+      line-height: 1.18;
+      margin: 7px 0 10px;
+    }
+
+    h3 {
+      color: var(--azul-escuro);
+      margin-top: 0;
+    }
+
+    .muted {
+      color: var(--texto-suave);
+    }
+
+    .small {
+      font-size: 0.85rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      min-width: 0;
+      padding: 22px;
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      box-shadow: var(--sombra);
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #263f50;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      display: block;
+      width: 100%;
+      min-height: 46px;
+      padding: 11px;
+      border: 1px solid #bdcdd8;
+      border-radius: 10px;
+      background: white;
+      color: var(--texto);
+    }
+
+    .field textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+
+    .hint {
+      display: block;
+      color: var(--texto-suave);
+      font-size: 0.84rem;
+      margin-top: 5px;
+    }
+
+    .upload {
+      display: block;
+      padding: 16px;
+      text-align: center;
+      background: #f6fcf7;
+      border: 2px dashed #83b397;
+      border-radius: 13px;
+    }
+
+    .upload input {
+      margin-top: 10px;
+      max-width: 100%;
+    }
+
+    .preview {
+      display: none;
+      max-width: 100%;
+      max-height: 250px;
+      border-radius: 10px;
+      margin: 12px auto;
+    }
+
+    .check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 15px 0;
+      color: var(--texto-suave);
+      font-size: 0.9rem;
+    }
+
+    .check input {
+      min-width: 18px;
+      min-height: 18px;
+      margin-top: 5px;
+    }
+
+    .notice {
+      padding: 13px;
+      background: #fff8e8;
+      border: 1px solid #ecd59b;
+      color: #684919;
+      border-radius: 11px;
+      font-size: 0.88rem;
+      margin-top: 14px;
+    }
+
+    .result {
+      display: none;
+      padding: 15px;
+      margin-top: 16px;
+      border: 1px solid #b8ddc0;
+      background: #eef8f0;
+      border-radius: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .item {
+      padding: 14px;
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+    }
+
+    .item p {
+      margin: 5px 0;
+      color: var(--texto-suave);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 3px 9px;
+      background: #e5f3e9;
+      color: var(--verde);
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: bold;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .timeline div {
+      padding-top: 8px;
+      border-top: 4px solid #d7e1e8;
+      color: var(--texto-suave);
+      font-size: 0.8rem;
+    }
+
+    .timeline .done {
+      border-color: var(--verde);
+      color: var(--verde);
+      font-weight: bold;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 17px;
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 1.7rem;
+      color: var(--azul-escuro);
+    }
+
+    .stat span {
+      color: var(--texto-suave);
+      font-size: 0.88rem;
+    }
+
+    .bar-row {
+      margin: 14px 0;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .bar {
+      height: 10px;
+      border-radius: 20px;
+      background: #e7edf1;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      background: var(--verde);
+    }
+
+    .access {
+      background: #eaf4ee;
+      border-top: 1px solid #d3e7d9;
+    }
+
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .access-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .access-card {
+      padding: 15px;
+      background: white;
+      border: 1px solid #d2e4d8;
+      border-radius: 13px;
+    }
+
+    .access-card strong {
+      display: block;
+      color: var(--azul-escuro);
+    }
+
+    /* DESTAQUE ESPECIAL PARA AS DICAS SOBRE O LIXO */
+    #dicas-lixo {
+      background: linear-gradient(135deg, #fff3c4 0%, #ffe1a6 100%);
+      border-top: 6px solid #e28b00;
+      border-bottom: 6px solid #e28b00;
+      padding-top: 36px;
+      padding-bottom: 36px;
+    }
+
+    #dicas-lixo .section-heading {
+      max-width: 100%;
+      padding: 20px;
+      background: #fffaf0;
+      border: 2px solid #f0b43c;
+      border-radius: 16px;
+      box-shadow: 0 5px 18px rgba(128, 78, 0, 0.12);
+    }
+
+    #dicas-lixo .section-heading h2,
+    #dicas-lixo .card h3 {
+      color: #8a4300;
+    }
+
+    #dicas-lixo .kicker {
+      color: #9b5200;
+      font-weight: 800;
+    }
+
+    #dicas-lixo .card {
+      background: #fffdf7;
+      border: 1px solid #efc46d;
+      box-shadow: 0 4px 14px rgba(128, 78, 0, 0.09);
+    }
+
+    #dicas-lixo li {
+      margin-bottom: 10px;
+    }
+
+    #dicas-lixo .btn-blue {
+      background: #a65300;
+      color: white;
+    }
+
+    #dicas-lixo .btn-blue:hover {
+      background: #813f00;
+    }
+
+    #dicas-lixo .alerta {
+      margin-top: 16px;
+      padding: 14px;
+      color: #713900;
+      background: #ffedbd;
+      border-left: 5px solid #e28b00;
+      border-radius: 8px;
+    }
+
+    footer {
+      padding: 28px 0;
+      background: #092f4e;
+      color: #e3edf4;
+    }
+
+    footer p {
+      color: #c0d2df;
+      font-size: 0.9rem;
+    }
+
+    body.large-text {
+      font-size: 19px;
+    }
+
+    body.high-contrast {
+      --azul: #002b52;
+      --azul-escuro: #001d35;
+      --verde: #003d1c;
+      --fundo: #ffffff;
+      --texto: #000000;
+      --texto-suave: #263a48;
+      --borda: #647784;
+    }
+
+    body.high-contrast .btn-green {
+      background: #ffff00;
+      color: #000000;
+    }
+
+    .toast {
+      display: none;
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #123c32;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 10px;
+      z-index: 40;
+      max-width: 90%;
+    }
+
+    @media (max-width: 850px) {
+      .hero-grid,
+      .grid,
+      .access-grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        order: 3;
+        width: 100%;
+      }
+
+      .section {
+        padding: 36px 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .stat-grid,
+      .access-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      .timeline {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero {
+        padding: 35px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo principal</a>
+
+  <header>
+    <div class="container head">
+      <a class="brand" href="#inicio">
+        <span class="brand-icon" aria-hidden="true">⌂</span>
+        <span>
+          <strong>Sobral Resolve</strong>
+          <small>Sua cidade, mais perto de você.</small>
+        </span>
+      </a>
+
+      <nav aria-label="Navegação principal">
+        <a href="#inicio">Início</a>
+        <a href="#registrar">Registrar</a>
+        <a href="#acompanhar">Acompanhar</a>
+        <a href="#mural">Mural</a>
+        <a href="#dicas-lixo">Dicas sobre lixo</a>
+        <a href="#estatisticas">Estatísticas</a>
+      </nav>
+
+      <div class="tools" aria-label="Acessibilidade">
+        <button type="button" id="aumentar" aria-label="Aumentar o texto">A+</button>
+        <button type="button" id="contraste" aria-pressed="false" aria-label="Ativar alto contraste">◐</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Tecnologia a serviço da população</div>
+          <h1>Vamos cuidar de Sobral juntos?</h1>
+          <p>
+            Registre problemas urbanos, envie uma foto e acompanhe cada etapa.
+            Um projeto para tornar a participação cidadã mais simples e acessível.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-green" href="#registrar">📷 Registrar ocorrência</a>
+            <a class="btn btn-outline" href="#acompanhar">Consultar protocolo</a>
+          </div>
+
+          <p class="small">
+            Protótipo independente — ainda não conectado à Prefeitura.
+          </p>
+        </div>
+
+        <aside class="hero-panel">
+          <strong>Como funciona</strong>
+          <ol>
+            <li>Descreva o problema e informe o local.</li>
+            <li>Adicione uma foto, se puder.</li>
+            <li>Receba um protocolo demonstrativo.</li>
+            <li>Acompanhe o registro nesta demonstração.</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="registrar">
+      <div class="container">
+        <div class="section-heading">
+          <div class="kicker">Registro simples</div>
+          <h2>Encontrou um problema na cidade?</h2>
+          <p class="muted">
+            Preencha o formulário. Os dados ficam neste navegador, para demonstração.
+          </p>
+        </div>
+
+        <div class="grid">
+          <form class="card" id="formRegistro">
+            <h3>Registrar reclamação ou sugestão</h3>
+            <p class="muted small">Campos com * são obrigatórios.</p>
+
+            <div class="field">
+              <label for="tipo">Tipo de manifestação *</label>
+              <select id="tipo" required>
+                <option value="">Selecione uma opção</option>
+                <option>Buraco ou pavimentação</option>
+                <option>Iluminação pública</option>
+                <option>Limpeza urbana</option>
+                <option>Água ou esgoto</option>
+                <option>Acessibilidade urbana</option>
+                <option>Transporte público</option>
+                <option>Reclamação sobre serviço</option>
+                <option>Sugestão de melhoria</option>
+                <option>Outro</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="descricao">O que aconteceu? *</label>
+              <textarea id="descricao" required minlength="10"
+                placeholder="Descreva o problema, onde aconteceu e desde quando, se souber."></textarea>
+              <button class="btn btn-blue" type="button" id="ditar">🎙️ Descrever por voz</button>
+              <span class="hint" id="vozAjuda">
+                O ditado depende da compatibilidade do navegador.
+              </span>
+            </div>
+
+            <div class="field">
+              <label for="bairro">Bairro *</label>
+              <input id="bairro" required placeholder="Ex.: Centro">
+            </div>
+
+            <div class="field">
+              <label for="local">Rua ou ponto de referência *</label>
+              <input id="local" required placeholder="Ex.: perto da praça">
+            </div>
+
+            <div class="field">
+              <label for="foto">Foto do problema (opcional)</label>
+              <div class="upload">
+                📸 <strong>Escolher ou tirar uma foto</strong>
+                <span class="hint">No celular, escolha a câmera ou a galeria. Máximo 8 MB.</span>
+                <input id="foto" type="file" accept="image/*" capture="environment">
+                <img id="preview" class="preview" alt="Pré-visualização da foto">
+              </div>
+              <span class="hint">
+                Evite fotografar rostos, documentos ou dados pessoais de terceiros.
+              </span>
+            </div>
+
+            <div class="field">
+              <label for="privacidade">Identificação</label>
+              <select id="privacidade">
+                <option value="identificado">Registro identificado (demonstração)</option>
+                <option value="anonimo">Quero registrar anonimamente (demonstração)</option>
+              </select>
+              <span class="hint">
+                O anonimato real exige implementação segura no servidor.
+              </span>
+            </div>
+
+            <label class="check">
+              <input id="confirmacao" type="checkbox" required>
+              <span>Confirmo que as informações são verdadeiras e entendo que esta versão é demonstrativa.</span>
+            </label>
+
+            <button class="btn btn-blue" type="submit">
+              Criar protocolo demonstrativo
+            </button>
+
+            <div class="result" id="resultado" role="status" aria-live="polite"></div>
+
+            <div class="notice">
+              Este formulário não envia registros à Prefeitura. Não use esta demonstração
+              para emergências ou situações que exijam atendimento imediato.
+            </div>
+          </form>
+
+          <aside class="card">
+            <h3>Uma boa ocorrência ajuda a resolver</h3>
+            <div class="list">
+              <div class="item">
+                <strong>📍 Local exato</strong>
+                <p>Informe bairro, rua e ponto de referência.</p>
+              </div>
+              <div class="item">
+                <strong>📷 Foto clara</strong>
+                <p>Fotografe de um local seguro, sem se colocar em risco.</p>
+              </div>
+              <div class="item">
+                <strong>✍️ Descrição objetiva</strong>
+                <p>Diga o que aconteceu e onde.</p>
+              </div>
+              <div class="item">
+                <strong>🔐 Respeito e privacidade</strong>
+                <p>Não publique senhas, documentos ou acusações sem comprovação.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="acompanhar" style="background:#ffffff">
+      <div class="container">
+        <div class="section-heading">
+          <div class="kicker">Transparência</div>
+          <h2>Acompanhe sua manifestação</h2>
+          <p class="muted">
+            Consulte os protocolos criados nesta demonstração, no mesmo navegador.
+          </p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Consultar protocolo</h3>
+            <form id="formConsulta">
+              <div class="field">
+                <label for="protocolo">Número do protocolo</label>
+                <input id="protocolo" placeholder="Ex.: SR-12345678" required>
+              </div>
+              <button class="btn btn-blue" type="submit">Consultar</button>
+            </form>
+            <div id="consultaResultado" class="result" role="status" aria-live="polite"></div>
+          </div>
+
+          <div class="card">
+            <h3>Meus registros neste aparelho</h3>
+            <div id="meusRegistros" class="list">
+              <p class="muted">Nenhum registro demonstrativo ainda.</p>
+            </div>
+            <button type="button" class="btn btn-outline" id="limpar">
+              Limpar registros locais
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO DE DICAS SOBRE O LIXO EM DESTAQUE -->
+    <section class="section" id="dicas-lixo">
+      <div class="container">
+        <div class="section-heading">
+          <div class="kicker">⚠️ Atenção, moradores de Sobral</div>
+          <h2>🗑️ Lixo no lugar certo</h2>
+          <p>
+            Pequenas atitudes ajudam a manter nossa cidade limpa, evitar bueiros
+            entupidos e reduzir a presença de animais e pragas.
+          </p>
+        </div>
+
+        <div class="access-grid">
+          <article class="card">
+            <h3>✅ Como guardar e colocar o lixo</h3>
+            <ul>
+              <li>Coloque o lixo doméstico em sacos resistentes e bem fechados.</li>
+              <li>Mantenha os sacos em recipiente com tampa até perto do horário da coleta.</li>
+              <li>Não existe um número único de dias para guardar o lixo. Confira o calendário do seu bairro e evite acumular restos de comida por muito tempo.</li>
+              <li>Coloque o saco na calçada somente no dia e próximo do horário em que o caminhão passa.</li>
+              <li>Não deixe o lixo na rua com muita antecedência: cães e outros animais podem rasgar os sacos e espalhar os resíduos.</li>
+              <li>O lixo espalhado pode chegar aos bueiros, obstruir a passagem da água e favorecer pragas e doenças.</li>
+              <li>Embale materiais cortantes com segurança e não os deixe soltos.</li>
+              <li>Nunca jogue lixo dentro de bueiros, em terrenos baldios ou em calçadas de outras pessoas.</li>
+            </ul>
+
+            <div class="alerta">
+              <strong>🚨 Atenção!</strong>
+              Não coloque o lixo na rua fora do dia da coleta. Manter os resíduos
+              acondicionados corretamente ajuda a evitar sacos rasgados, mau cheiro,
+              bueiros entupidos e focos de doenças.
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>📅 Qual é o dia da coleta no meu bairro?</h3>
+            <p>
+              Os dias e horários podem variar conforme a rua e a rota do caminhão.
+              Consulte a informação oficial antes de colocar o lixo na calçada.
+            </p>
+
+            <p>
+              <a class="btn btn-blue"
+                 href="https://sesep.sobral.ce.gov.br/noticias/principais/255-coletasistematicasobral"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                Consultar calendário oficial ↗
+              </a>
+            </p>
+
+            <h3>🛋️ Precisa descartar objetos grandes?</h3>
+            <p>
+              Para móveis e outros objetos volumosos, consulte a Secretaria da
+              Conservação e Serviços Públicos (SESEP) sobre a coleta programada.
+            </p>
+
+            <h3>📞 A coleta não passou?</h3>
+            <p>
+              Anote o bairro, a rua, a data e o horário aproximado. Você pode
+              registrar a ocorrência neste site, com uma foto se for seguro.
+            </p>
+
+            <p class="small">
+              Contatos divulgados para a SESEP: (88) 3695-4100 e (88) 3695-4101.
+              Confirme os contatos e os horários nos canais oficiais.
+            </p>
+
+            <p class="small">
+              O Sobral Resolve é um projeto independente, ainda não conectado à Prefeitura.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mural">
+      <div class="container">
+        <div class="section-heading">
+          <div class="kicker">Participação cidadã</div>
+          <h2>Mural de ocorrências demonstrativas</h2>
+          <p class="muted">
+            Exemplos fictícios para mostrar como o mural público poderia funcionar.
+          </p>
+        </div>
+
+        <div class="list">
+          <article class="item">
+            <span class="pill">Exemplo fictício</span>
+            <h3>Iluminação pública</h3>
+            <p>Bairro ilustrativo: Centro · Status: Em análise</p>
+          </article>
+
+          <article class="item">
+            <span class="pill">Exemplo fictício</span>
+            <h3>Manutenção de via</h3>
+            <p>Bairro ilustrativo: Junco · Status: Encaminhada</p>
+          </article>
+
+          <article class="item">
+            <span class="pill">Exemplo fictício</span>
+            <h3>Sugestão de acessibilidade</h3>
+            <p>Bairro ilustrativo: Campo dos Velhos · Status: Recebida</p>
+          </article>
+        </div>
+
+        <div class="notice">
+          Na versão real, as publicações precisam passar por moderação.
+          Dados pessoais e acusações sem comprovação não devem ser publicados.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="estatisticas" style="background:#ffffff">
+      <div class="container">
+        <div class="section-heading">
+          <div class="kicker">Dados para melhorar a cidade</div>
+          <h2>Painel de estatísticas</h2>
+          <p class="muted">
+            Estes números são fictícios e servem somente para demonstrar o painel.
+          </p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat">
+            <b id="totalStat">128</b>
+            <span>Registros demonstrativos</span>
+          </div>
+          <div class="stat">
+            <b>74</b>
+            <span>Concluídos (exemplo)</span>
+          </div>
+          <div class="stat">
+            <b>54</b>
+            <span>Em andamento (exemplo)</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3>Exemplo de distribuição por categoria</h3>
+
+          <div class="bar-row">
+            <div class="bar-label"><span>Iluminação pública</span><b>32%</b></div>
+            <div class="bar"><span style="width:32%"></span></div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-label"><span>Vias e calçadas</span><b>28%</b></div>
+            <div class="bar"><span style="width:28%"></span></div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-label"><span>Limpeza urbana</span><b>22%</b></div>
+            <div class="bar"><span style="width:22%"></span></div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-label"><span>Outros assuntos</span><b>18%</b></div>
+            <div class="bar"><span style="width:18%"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section access" id="acessibilidade">
+      <div class="container access-grid">
+        <div>
+          <div class="kicker">Acesso para todos</div>
+          <h2>Um serviço deve ser simples para todo mundo.</h2>
+          <p>
+            O projeto prioriza linguagem clara, controles fáceis de encontrar
+            e navegação por teclado.
+          </p>
+          <ul>
+            <li>Botão A+ para ampliar o texto.</li>
+            <li>Alto contraste opcional.</li>
+            <li>Rótulos claros e foco visível.</li>
+            <li>Registro por voz em navegadores compatíveis.</li>
+            <li>Layout adaptado para celular.</li>
+          </ul>
+        </div>
+
+        <div class="access-cards">
+          <div class="access-card">
+            <strong>🔎 Texto legível</strong>
+            <p>Amplie o texto pelo botão A+ no cabeçalho.</p>
+          </div>
+          <div class="access-card">
+            <strong>◐ Contraste</strong>
+            <p>Ative o alto contraste no cabeçalho.</p>
+          </div>
+          <div class="access-card">
+            <strong>⌨️ Teclado</strong>
+            <p>Use Tab para navegar e Enter para ativar controles.</p>
+          </div>
+          <div class="access-card">
+            <strong>♥ Linguagem simples</strong>
+            <p>Instruções diretas em cada etapa do formulário.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <div class="kicker">Próxima etapa</div>
+          <h2>Como conectar à Prefeitura?</h2>
+          <p class="muted">
+            A integração oficial depende de autorização e desenvolvimento técnico.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <h3>Área do cidadão</h3>
+            <p>Login seguro, perfil, histórico, protocolo e avaliação do atendimento.</p>
+          </article>
+
+          <article class="card">
+            <h3>Área da equipe municipal</h3>
+            <p>Fila de trabalho, setor responsável, prazos e respostas.</p>
+          </article>
+
+          <article class="card">
+            <h3>Central de moderação</h3>
+            <p>
+              Área interna para revisar publicações, analisar denúncias e justificar
+              decisões. O acesso real precisa de autenticação e permissões seguras.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Integração oficial</h3>
+            <p>
+              Será necessário definir com a Prefeitura os responsáveis, os prazos,
+              a proteção de dados e o sistema autorizado para receber manifestações.
+            </p>
+          </article>
+        </div>
+
+        <div class="notice">
+          Este site é um protótipo independente, não um canal oficial da Prefeitura
+          de Sobral. Os registros demonstrativos ficam no armazenamento local
+          do navegador.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <strong>Sobral Resolve</strong>
+      <p>Sua cidade melhor começa com a sua voz.</p>
+      <p>Projeto demonstrativo independente · Não conectado à Prefeitura de Sobral.</p>
+      <a href="#inicio" style="color:#d8f2df">Voltar ao início ↑</a>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const $ = (seletor) => document.querySelector(seletor);
+    const CHAVE = "sobralResolveDemoV3";
+
+    let registros = [];
+
+    try {
+      registros = JSON.parse(localStorage.getItem(CHAVE) || "[]");
+    } catch (erro) {
+      registros = [];
+    }
+
+    function salvarRegistros() {
+      try {
+        localStorage.setItem(CHAVE, JSON.stringify(registros));
+      } catch (erro) {
+        mostrarAviso("Não foi possível guardar os registros neste navegador.");
+      }
+    }
+
+    function mostrarAviso(mensagem) {
+      const toast = $("#toast");
+      toast.textContent = mensagem;
+      toast.style.display = "block";
+
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 3500);
+    }
+
+    function escapar(texto) {
+      return String(texto).replace(/[&<>"']/g, caractere => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[caractere]);
+    }
+
+    $("#aumentar").addEventListener("click", () => {
+      document.body.classList.toggle("large-text");
+
+      const ativado = document.body.classList.contains("large-text");
+      $("#aumentar").setAttribute("aria-pressed", String(ativado));
+    });
+
+    $("#contraste").addEventListener("click", () => {
+      document.body.classList.toggle("high-contrast");
+
+      const ativado = document.body.classList.contains("high-contrast");
+      $("#contraste").setAttribute("aria-pressed", String(ativado));
+    });
+
+    $("#foto").addEventListener("change", evento => {
+      const arquivo = evento.target.files[0];
+      const imagem = $("#preview");
+
+      if (!arquivo) {
+        imagem.style.display = "none";
+        return;
+      }
+
+      if (!arquivo.type.startsWith("image/")) {
+        mostrarAviso("Escolha um arquivo de imagem.");
+        evento.target.value = "";
+        return;
+      }
+
+      if (arquivo.size > 8 * 1024 * 1024) {
+        mostrarAviso("A imagem ultrapassa 8 MB. Escolha uma menor.");
+        evento.target.value = "";
+        imagem.style.display = "none";
+        return;
+      }
+
+      const leitor = new FileReader();
+
+      leitor.onload = () => {
+        imagem.src = leitor.result;
+        imagem.style.display = "block";
+      };
+
+      leitor.readAsDataURL(arquivo);
+    });
+
+    $("#ditar").addEventListener("click", () => {
+      const Reconhecimento =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!Reconhecimento) {
+        $("#vozAjuda").textContent =
+          "O reconhecimento de voz não está disponível neste navegador. Digite a descrição normalmente.";
+        return;
+      }
+
+      const reconhecimento = new Reconhecimento();
+      reconhecimento.lang = "pt-BR";
+
+      reconhecimento.onresult = evento => {
+        const texto = evento.results[0][0].transcript;
+        const campo = $("#descricao");
+
+        campo.value += (campo.value ? " " : "") + texto;
+      };
+
+      reconhecimento.onerror = () => {
+        mostrarAviso("Não foi possível reconhecer a voz. Tente digitar.");
+      };
+
+      reconhecimento.start();
+      $("#vozAjuda").textContent = "Pode falar agora…";
+    });
+
+    function mostrarMeusRegistros() {
+      const lista = $("#meusRegistros");
+
+      if (!registros.length) {
+        lista.innerHTML =
+          '<p class="muted">Nenhum registro demonstrativo ainda.</p>';
+        return;
+      }
+
+      lista.innerHTML = registros.slice().reverse().map(registro => `
+        <article class="item">
+          <strong>${escapar(registro.protocolo)} · ${escapar(registro.tipo)}</strong>
+          <p>${escapar(registro.bairro)} — ${escapar(registro.local)}</p>
+          <span class="pill">${escapar(registro.status)}</span>
+        </article>
+      `).join("");
+    }
+
+    $("#formRegistro").addEventListener("submit", evento => {
+      evento.preventDefault();
+
+      const protocolo =
+        "SR-" + Math.floor(10000000 + Math.random() * 90000000);
+
+      const registro = {
+        protocolo,
+        tipo: $("#tipo").value,
+        descricao: $("#descricao").value,
+        bairro: $("#bairro").value,
+        local: $("#local").value,
+        privacidade: $("#privacidade").value,
+        status: "Recebida (demonstração)",
+        criado: new Date().toLocaleString("pt-BR")
+      };
+
+      registros.push(registro);
+      salvarRegistros();
+      mostrarMeusRegistros();
+
+      $("#resultado").style.display = "block";
+      $("#resultado").innerHTML = `
+        <h3>Protocolo demonstrativo criado</h3>
+        <p><strong>${escapar(protocolo)}</strong></p>
+        <p>Guarde este código para consultar o registro neste aparelho.</p>
+        <p class="small">Este protocolo não é oficial e não foi enviado à Prefeitura.</p>
+        <button type="button" class="btn btn-blue" id="copiar">Copiar protocolo</button>
+      `;
+
+      $("#copiar").addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(protocolo);
+          mostrarAviso("Protocolo copiado.");
+        } catch (erro) {
+          mostrarAviso("Seu protocolo é " + protocolo);
+        }
+      });
+
+      $("#totalStat").textContent = 128 + registros.length;
+      $("#formRegistro").reset();
+      $("#preview").style.display = "none";
+
+      mostrarAviso("Registro demonstrativo salvo neste navegador.");
+    });
+
+    $("#formConsulta").addEventListener("submit", evento => {
+      evento.preventDefault();
+
+      const codigo = $("#protocolo").value.trim().toUpperCase();
+      const registro = registros.find(item => item.protocolo === codigo);
+      const resultado = $("#consultaResultado");
+
+      resultado.style.display = "block";
+
+      if (!registro) {
+        resultado.innerHTML = `
+          <p>Não encontramos esse código nos registros locais deste navegador.
+          Confira o protocolo ou use o aparelho em que ele foi criado.</p>
+        `;
+        return;
+      }
+
+      resultado.innerHTML = `
+        <h3>${escapar(registro.protocolo)}</h3>
+        <p><strong>${escapar(registro.tipo)}</strong></p>
+        <p>${escapar(registro.descricao)}</p>
+        <p>Local: ${escapar(registro.bairro)}, ${escapar(registro.local)}</p>
+        <p>Status: <span class="pill">${escapar(registro.status)}</span></p>
+        <p class="small">Criado em ${escapar(registro.criado)}</p>
+        <div class="timeline">
+          <div class="done">Recebida</div>
+          <div>Em análise</div>
+          <div>Em atendimento</div>
+          <div>Concluída</div>
+        </div>
+        <p class="small">Etapas ilustrativas. Nenhum setor municipal recebeu este registro.</p>
+      `;
+    });
+
+    $("#limpar").addEventListener("click", () => {
+      const confirmou = confirm(
+        "Apagar os registros demonstrativos guardados neste navegador?"
+      );
+
+      if (!confirmou) return;
+
+      registros = [];
+      salvarRegistros();
+      mostrarMeusRegistros();
+
+      $("#consultaResultado").style.display = "none";
+      $("#totalStat").textContent = "128";
+
+      mostrarAviso("Registros locais apagados.");
+    });
+
+    mostrarMeusRegistros();
+  </script>
+</body>
+</html>
